@@ -1,2 +1,2 @@
 const String publishedKey="pk_test_51JJImeEfyRYRUapnsPHVxkpKQ28aDffJ8e68apZBQymGnJ6qZWkMCTX8TYK01sVeYdNm8cHGIl7bNjMdnBFF9FtL00dWV5K0Vt";
-const String SecretKey="sk_test_51JJImeEfyRYRUapn7AcdRZvP0j8VDChcJosjfFYgrDLPbwuzOuz5ESO4a1nD9SXkSuUuHFYSDqVu3EcO2Px7vvKZ000yQAn2hy";
+const String SecretKey="sk";
