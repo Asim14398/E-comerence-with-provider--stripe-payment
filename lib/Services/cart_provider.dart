@@ -1,30 +1,34 @@
 import 'package:flutter/cupertino.dart';
 
 class CartProvider extends ChangeNotifier {
-  List<Map<String, dynamic>> selectedItem = [];
+  Map<String, Map<String, dynamic>> _cartItems = {};
 
-  List<Map<String, dynamic>> get item => selectedItem;
+  Map<String, Map<String, dynamic>> get items => _cartItems;
 
-  // Add a single item to the selectedItem list
-  void additem(Map<String, dynamic> value) {
-    selectedItem.add(value); // Add product if not already in the list
-      print('added');
-      notifyListeners();
+  void addItem(Map<String, dynamic> product) {
+    String productId = product['name']; // Use a unique identifier, preferably product['id'] if available
 
-  }
+    if (_cartItems.containsKey(productId)) {
+      _cartItems[productId]!['quantity'] += 1;
+    } else {
+      _cartItems[productId] = {...product, 'quantity': 1};
+    }
 
-  // Optionally, remove an item by matching a specific value
-  void removeItemByValue(Map<String, dynamic> value) {
-    selectedItem.remove(value);
     notifyListeners();
   }
 
-  // Calculate the total value of the cart (sum of product prices)
-  double get totalPrice {
-    double total = 0.0;
-    for (var product in selectedItem) {
-      total += product['price'] ?? 0.0; // Ensure that the price exists and is added
+  void removeItem(String productId) {
+    if (_cartItems.containsKey(productId)) {
+      if (_cartItems[productId]!['quantity'] > 1) {
+        _cartItems[productId]!['quantity'] -= 1;
+      } else {
+        _cartItems.remove(productId);
+      }
+      notifyListeners();
     }
-    return total;
+  }
+
+  double get totalPrice {
+    return _cartItems.values.fold(0.0, (sum, item) => sum + (item['price'] * item['quantity']));
   }
 }
